@@ -1,0 +1,376 @@
+﻿
+一、配置Git：
+01.官网注册帐号
+02.$ ssh-keygen-t rsa -C "your_email@youremail.com"             #本地创建ssh key，路径C:\Users\zyy\.ssh\id_rsa.pub
+03.官网打开你GitHub的设置界面，找到SSH and GPG keys这个选项之后，在网页右上角有一个添加新的SSH keys 
+04.$ ssh -T git@github.com
+05.$ git config --global user.name"your name"
+06.$ git config --global user.email"email@email.com"
+07.$ git remote add origin git@github.com:yourName/yourRepo.git #上传仓库
+08.$ git push origin master                                     #上传文件
+--------------------------------------------------------------------------------------------------------------------------------
+二、常用指令
+01.$ mkdir hello-word                                           #创建一个名为"hello-world"的文件夹
+02.$ cd hello-world                                             #进入"hello-world'文件夹
+03.$ git init                                                   #初始化Git仓库
+04.$ echo "This is a simple practise" > readme.txt              #创建一个readme.txt文件，内容为"This is a simple practise"
+05.$ git status                                                 #查看当前版本库状态
+06.$ git add readme.txt                                         #将readme.txt加入缓冲区
+07.$ git add .                                                  #加入所有修改
+08.$ git commit -m                                              #提交修改，-m后面所带的参数是本次提交信息
+09.$ git log                                                    #查看历史提交记录。每个记录都会有提交id，作者和提交日期
+10.$ git branch                                                 #查看当前有哪些分支
+11.$ git checkout -b feature                                    #创建一个名为feature的分支
+12.$ git clone 网址                                             #下载项目源码
+13.$ git checkout commitId                                      #回到某一历史版本
+14.$ git checkout master                                        #回到最新代码,切回主分支
+15.$ git pull                                                   #下载新代码
+16.$ git branch -D feature                                      #分支被强制删除，无法恢复。
+17.$ git status                                                 #检查当前文件状态、
+18.$ git status -s                                              #状态简览
+19.$ git rm                                                     #移除文件
+20.$ git mv file_from file_to                                   #移动文件
+21.$ git commit --amend                                         #撤消操作
+22.$ git remote -v                                              #查看远程仓库
+23.$ git config –global core.quotepath false                   #设置显示中文文件名 
+24.$ git merge                                                  #合并分支
+--------------------------------------------------------------------------------------------------------------------------------
+三、获取帮助
+$ git help <verb>
+$ git <verb> --help
+$ man git-<verb>
+$ git help config
+--------------------------------------------------------------------------------------------------------------------------------
+四、Git Diff
+Git Diff 的插件版本
+在本书中，我们使用 git diff 来分析文件差异。 但是，如果你喜欢通过图形化的方式或其它格式输出方式的话，可以使用 git difftool 命令来用 Araxis ，emerge 或 vimdiff 等软件输出 diff 分析结果。 使用 git difftool --tool-help 命令来看你的系统支持哪些 Git Diff 插件。
+--------------------------------------------------------------------------------------------------------------------------------
+五、查看提交历史
+在提交了若干更新，又或者克隆了某个项目之后，你也许想回顾下提交历史。 完成这个任务最简单而又有效的工具是 git log 命令。
+
+接下来的例子会用我专门用于演示的 simplegit 项目， 运行下面的命令获取该项目源代码：
+
+git clone https://github.com/schacon/simplegit-progit
+
+然后在此项目中运行 git log，应该会看到下面的输出：
+
+$ git log
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Sat Mar 15 16:40:33 2008 -0700
+
+    removed unnecessary test
+
+commit a11bef06a3f659402fe7563abf99ad00de2209e6
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Sat Mar 15 10:31:28 2008 -0700
+
+    first commit
+
+默认不用任何参数的话，git log 会按提交时间列出所有的更新，最近的更新排在最上面。 正如你所看到的，这个命令会列出每个提交的 SHA-1 校验和、作者的名字和电子邮件地址、提交时间以及提交说明。
+
+git log 有许多选项可以帮助你搜寻你所要找的提交， 接下来我们介绍些最常用的。
+
+一个常用的选项是 -p，用来显示每次提交的内容差异。 你也可以加上 -2 来仅显示最近两次提交：
+
+$ git log -p -2
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+
+diff --git a/Rakefile b/Rakefile
+index a874b73..8f94139 100644
+--- a/Rakefile
++++ b/Rakefile
+@@ -5,7 +5,7 @@ require 'rake/gempackagetask'
+ spec = Gem::Specification.new do |s|
+     s.platform  =   Gem::Platform::RUBY
+     s.name      =   "simplegit"
+-    s.version   =   "0.1.0"
++    s.version   =   "0.1.1"
+     s.author    =   "Scott Chacon"
+     s.email     =   "schacon@gee-mail.com"
+     s.summary   =   "A simple gem for using Git in Ruby code."
+
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Sat Mar 15 16:40:33 2008 -0700
+
+    removed unnecessary test
+
+diff --git a/lib/simplegit.rb b/lib/simplegit.rb
+index a0a60ae..47c6340 100644
+--- a/lib/simplegit.rb
++++ b/lib/simplegit.rb
+@@ -18,8 +18,3 @@ class SimpleGit
+     end
+
+ end
+-
+-if $0 == __FILE__
+-  git = SimpleGit.new
+-  puts git.show
+-end
+\ No newline at end of file
+
+该选项除了显示基本信息之外，还附带了每次 commit 的变化。 当进行代码审查，或者快速浏览某个搭档提交的 commit 所带来的变化的时候，这个参数就非常有用了。 你也可以为 git log 附带一系列的总结性选项。 比如说，如果你想看到每次提交的简略的统计信息，你可以使用 --stat 选项：
+
+$ git log --stat
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+
+ Rakefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Sat Mar 15 16:40:33 2008 -0700
+
+    removed unnecessary test
+
+ lib/simplegit.rb | 5 -----
+ 1 file changed, 5 deletions(-)
+
+commit a11bef06a3f659402fe7563abf99ad00de2209e6
+Author: Scott Chacon <schacon@gee-mail.com>
+Date:   Sat Mar 15 10:31:28 2008 -0700
+
+    first commit
+
+ README           |  6 ++++++
+ Rakefile         | 23 +++++++++++++++++++++++
+ lib/simplegit.rb | 25 +++++++++++++++++++++++++
+ 3 files changed, 54 insertions(+)
+
+正如你所看到的，--stat 选项在每次提交的下面列出所有被修改过的文件、有多少文件被修改了以及被修改过的文件的哪些行被移除或是添加了。 在每次提交的最后还有一个总结。
+
+另外一个常用的选项是 --pretty。 这个选项可以指定使用不同于默认格式的方式展示提交历史。 这个选项有一些内建的子选项供你使用。 比如用 oneline 将每个提交放在一行显示，查看的提交数很大时非常有用。 另外还有 short，full 和 fuller 可以用，展示的信息或多或少有些不同，请自己动手实践一下看看效果如何。
+
+$ git log --pretty=oneline
+ca82a6dff817ec66f44342007202690a93763949 changed the version number
+085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7 removed unnecessary test
+a11bef06a3f659402fe7563abf99ad00de2209e6 first commit
+
+但最有意思的是 format，可以定制要显示的记录格式。 这样的输出对后期提取分析格外有用?—?因为你知道输出的格式不会随着 Git 的更新而发生改变：
+
+$ git log --pretty=format:"%h - %an, %ar : %s"
+ca82a6d - Scott Chacon, 6 years ago : changed the version number
+085bb3b - Scott Chacon, 6 years ago : removed unnecessary test
+a11bef0 - Scott Chacon, 6 years ago : first commit
+
+git log --pretty=format 常用的选项 列出了常用的格式占位符写法及其代表的意义。
+
+Table 1. git log --pretty=format 常用的选项
+选项	                          说明
+%H                   提交对象（commit）的完整哈希字串
+%h                   提交对象的简短哈希字串
+%T                   树对象（tree）的完整哈希字串
+%t                   树对象的简短哈希字串
+%P                   父对象（parent）的完整哈希字串
+%p                   父对象的简短哈希字串
+%an                  作者（author）的名字
+%ae                  作者的电子邮件地址
+%ad                  作者修订日期（可以用 --date= 选项定制格式）
+%ar                  作者修订日期，按多久以前的方式显示
+%cn                  提交者（committer）的名字
+%ce                  提交者的电子邮件地址
+%cd                  提交日期
+%cr                  提交日期，按多久以前的方式显示
+%s                   提交说明
+
+你一定奇怪 作者 和 提交者 之间究竟有何差别， 其实作者指的是实际作出修改的人，提交者指的是最后将此工作成果提交到仓库的人。 所以，当你为某个项目发布补丁，然后某个核心成员将你的补丁并入项目时，你就是作者，而那个核心成员就是提交者。 我们会在 分布式 Git 再详细介绍两者之间的细微差别。
+
+当 oneline 或 format 与另一个 log 选项 --graph 结合使用时尤其有用。 这个选项添加了一些ASCII字符串来形象地展示你的分支、合并历史：
+
+$ git log --pretty=format:"%h %s" --graph
+* 2d3acf9 ignore errors from SIGCHLD on trap
+*  5e3ee11 Merge branch 'master' of git://github.com/dustin/grit
+|\
+| * 420eac9 Added a method for getting the current branch.
+* | 30e367c timeout code and tests
+* | 5a09431 add timeout protection to grit
+* | e1193f8 support for heads with slashes in them
+|/
+* d6016bc require time for xmlschema
+*  11d191e Merge branch 'defunkt' into local
+
+这种输出类型会在我们下一章学完分支与合并以后变得更加有趣。
+
+以上只是简单介绍了一些 git log 命令支持的选项。 git log 的常用选项 列出了我们目前涉及到的和没涉及到的选项，以及它们是如何影响 log 命令的输出的：
+
+Table 2. git log 的常用选项
+
+选项	                             说明
+-p                      按补丁格式显示每个更新之间的差异。
+--stat                  显示每次更新的文件修改统计信息。
+--shortstat             只显示 --stat 中最后的行数修改添加移除统计。
+--name-only             仅在提交信息后显示已修改的文件清单。
+--name-status           显示新增、修改、删除的文件清单。
+--abbrev-commit         仅显示 SHA-1 的前几个字符，而非所有的 40 个字符。
+--relative-date         使用较短的相对时间显示（比如，“2 weeks ago”）。
+--graph                 显示 ASCII 图形表示的分支合并历史。
+--pretty                使用其他格式显示历史提交信息。可用的选项包括 oneline，short，full，fuller 和 format（后跟指定格式）。
+
+限制输出长度
+除了定制输出格式的选项之外，git log 还有许多非常实用的限制输出长度的选项，也就是只输出部分提交信息。 之前你已经看到过 -2 了，它只显示最近的两条提交， 实际上，这是 -<n> 选项的写法，其中的 n 可以是任何整数，表示仅显示最近的若干条提交。 不过实践中我们是不太用这个选项的，Git 在输出所有提交时会自动调用分页程序，所以你一次只会看到一页的内容。
+
+另外还有按照时间作限制的选项，比如 --since 和 --until 也很有用。 例如，下面的命令列出所有最近两周内的提交：
+
+$ git log --since=2.weeks
+
+这个命令可以在多种格式下工作，比如说具体的某一天 "2008-01-15"，或者是相对地多久以前 "2 years 1 day 3 minutes ago"。
+
+还可以给出若干搜索条件，列出符合的提交。 用 --author 选项显示指定作者的提交，用 --grep 选项搜索提交说明中的关键字。 （请注意，如果要得到同时满足这两个选项搜索条件的提交，就必须用 --all-match 选项。否则，满足任意一个条件的提交都会被匹配出来）
+
+另一个非常有用的筛选选项是 -S，可以列出那些添加或移除了某些字符串的提交。 比如说，你想找出添加或移除了某一个特定函数的引用的提交，你可以这样使用：
+
+$ git log -Sfunction_name
+最后一个很实用的 git log 选项是路径（path）， 如果只关心某些文件或者目录的历史提交，可以在 git log 选项的最后指定它们的路径。 因为是放在最后位置上的选项，所以用两个短划线（--）隔开之前的选项和后面限定的路径名。
+
+在 限制 git log 输出的选项 中列出了常用的选项
+
+Table 3. 限制 git log 输出的选项
+选项	                          说明
+-(n)                      仅显示最近的 n 条提交
+--since, --after          仅显示指定时间之后的提交。
+--until, --before         仅显示指定时间之前的提交。
+--author                  仅显示指定作者相关的提交。
+--committer               仅显示指定提交者相关的提交。
+--grep                    仅显示含指定关键字的提交
+-S                        仅显示添加或移除了某个关键字的提交
+
+来看一个实际的例子，如果要查看 Git 仓库中，2008 年 10 月期间，Junio Hamano 提交的但未合并的测试文件，可以用下面的查询命令：
+
+$ git log --pretty="%h - %s" --author=gitster --since="2008-10-01" \
+   --before="2008-11-01" --no-merges -- t/
+5610e3b - Fix testcase failure when extended attributes are in use
+acd3b9e - Enhance hold_lock_file_for_{update,append}() API
+f563754 - demonstrate breakage of detached checkout with symbolic link HEAD
+d1a43f2 - reset --hard/read-tree --reset -u: remove unmerged new paths
+51a94af - Fix "checkout --track -b newbranch" on detached HEAD
+b0ad11e - pull: allow "git pull origin $something:$current_branch" into an unborn branch
+
+在近 40000 条提交中，上面的输出仅列出了符合条件的 6 条记录。
+
+--------------------------------------------------------------------------------------------------------------------------------
+六、从远程仓库中抓取与拉取
+就如刚才所见，从远程仓库中获得数据，可以执行：
+
+$ git fetch [remote-name]
+这个命令会访问远程仓库，从中拉取所有你还没有的数据。 执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。
+
+如果你使用 clone 命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以 “origin” 为简写。 所以，git fetch origin 会抓取克隆（或上一次抓取）后新推送的所有工作。 必须注意 git fetch 命令会将数据拉取到你的本地仓库 - 它并不会自动合并或修改你当前的工作。 当准备好时你必须手动将其合并入你的工作。
+
+如果你有一个分支设置为跟踪一个远程分支（阅读下一节与 Git 分支 了解更多信息），可以使用 git pull 命令来自动的抓取然后合并远程分支到当前分支。 这对你来说可能是一个更简单或更舒服的工作流程；默认情况下，git clone 命令会自动设置本地 master 分支跟踪克隆的远程仓库的 master 分支（或不管是什么名字的默认分支）。 运行 git pull 通常会从最初克隆的服务器上抓取数据并自动尝试合并到当前所在的分支。
+
+推送到远程仓库
+当你想分享你的项目时，必须将其推送到上游。 这个命令很简单：git push [remote-name] [branch-name]。 当你想要将 master 分支推送到 origin 服务器时（再次说明，克隆时通常会自动帮你设置好那两个名字），那么运行这个命令就可以将你所做的备份到服务器：
+
+$ git push origin master
+只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。 当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。 你必须先将他们的工作拉取下来并将其合并进你的工作后才能推送。 阅读 Git 分支 了解如何推送到远程仓库服务器的详细信息。
+
+推送到远程仓库
+当你想分享你的项目时，必须将其推送到上游。 这个命令很简单：git push [remote-name] [branch-name]。 当你想要将 master 分支推送到 origin 服务器时（再次说明，克隆时通常会自动帮你设置好那两个名字），那么运行这个命令就可以将你所做的备份到服务器：
+
+$ git push origin master
+只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。 当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。 你必须先将他们的工作拉取下来并将其合并进你的工作后才能推送。 阅读 Git 分支 了解如何推送到远程仓库服务器的详细信息。
+
+查看远程仓库
+如果想要查看某一个远程仓库的更多信息，可以使用 git remote show [remote-name] 命令。 如果想以一个特定的缩写名运行这个命令，例如 origin，会得到像下面类似的信息：
+
+$ git remote show origin
+* remote origin
+  Fetch URL: https://github.com/schacon/ticgit
+  Push  URL: https://github.com/schacon/ticgit
+  HEAD branch: master
+  Remote branches:
+    master                               tracked
+    dev-branch                           tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (up to date)
+
+它同样会列出远程仓库的 URL 与跟踪分支的信息。 这些信息非常有用，它告诉你正处于 master 分支，并且如果运行 git pull，就会抓取所有的远程引用，然后将远程 master 分支合并到本地 master 分支。 它也会列出拉取到的所有远程引用。
+
+这是一个经常遇到的简单例子。 如果你是 Git 的重度使用者，那么还可以通过 git remote show 看到更多的信息。
+
+$ git remote show origin
+* remote origin
+  URL: https://github.com/my-org/complex-project
+  Fetch URL: https://github.com/my-org/complex-project
+  Push  URL: https://github.com/my-org/complex-project
+  HEAD branch: master
+  Remote branches:
+    master                           tracked
+    dev-branch                       tracked
+    markdown-strip                   tracked
+    issue-43                         new (next fetch will store in remotes/origin)
+    issue-45                         new (next fetch will store in remotes/origin)
+    refs/remotes/origin/issue-11     stale (use 'git remote prune' to remove)
+  Local branches configured for 'git pull':
+    dev-branch merges with remote dev-branch
+    master     merges with remote master
+  Local refs configured for 'git push':
+    dev-branch                     pushes to dev-branch                     (up to date)
+    markdown-strip                 pushes to markdown-strip                 (up to date)
+    master                         pushes to master                         (up to date)
+
+这个命令列出了当你在特定的分支上执行 git push 会自动地推送到哪一个远程分支。 它也同样地列出了哪些远程分支不在你的本地，哪些远程分支已经从服务器上移除了，还有当你执行 git pull 时哪些分支会自动合并。
+
+远程仓库的移除与重命名
+如果想要重命名引用的名字可以运行 git remote rename 去修改一个远程仓库的简写名。 例如，想要将 pb 重命名为 paul，可以用 git remote rename 这样做：
+
+$ git remote rename pb paul
+$ git remote
+origin
+paul
+
+值得注意的是这同样也会修改你的远程分支名字。 那些过去引用 pb/master 的现在会引用 paul/master。
+
+如果因为一些原因想要移除一个远程仓库 - 你已经从服务器上搬走了或不再想使用某一个特定的镜像了，又或者某一个贡献者不再贡献了 - 可以使用 git remote rm ：
+
+$ git remote rm paul
+$ git remote
+origin
+
+--------------------------------------------------------------------------------------------------------------------------------
+七、stash 命令 
+使用场景，如你正在一个分支 a 上修改着代码什么的，但是这时候，有一个紧急的任务，需要你切换到另一个分支 b 去做些工作， 
+而 a 上的代码还是个半吊子，不想去 commit 甚至不想去 add ，这时候 stash 命令就大有用处了，前提是没有执行 commit
+
+git stash 
+把当前分支没有 commit 的代码先暂存起来，这时使用 git status 会发现分支很干净 
+
+
+git stash list 
+可以看到此时暂存区多了一条记录 
+ 
+暂存成功后，你就可以切换到 b 去做其他的功能 
+b 分支的事情做完后，就可以再切换回 a 分支，继续之前的工作
+
+git stash apply 
+ 
+执行后， a 分支之前的代码就又回来了，然后做好把暂存区的 stash 记录删除
+
+git stash drop 
+就是把最近的一条 stash 记录删除， drop 后还可以跟 stash_id 来删除指定的记录 
+
+
+git stash pop 
+这个命令相当于同时执行了 apply 和 drop ，谨慎起见，使用 git stash list 查看一下是否确实删除了该记录 
+
+
+git stash clear 
+清空暂存区的所有记录，drop 只是删除一条，drop 后可以跟 stash_id 来删除指定的记录，不跟就是删除最近的

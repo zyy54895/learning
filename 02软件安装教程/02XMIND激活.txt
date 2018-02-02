@@ -1,0 +1,6 @@
+1.将 “XMindCrack.jar“ 复制到 D盘根目录.
+2.找到 “XMind“ 安装目录, 如: “D:\Program Files (x86)\XMind“
+3.以文本格式打开安装目录中 “XMind.ini“
+4.在 “XMind.ini“ 最后追加 “-javaagent:D:/XMindCrack.jar“
+5.断开网络, 或者使用防火墙阻止 XMind 联网, 或者在 “hosts“ 中添加 “0.0.0.0 www.xmind.net“, 或者在命令行中执行 “md “%APPDATA%\XMind\workspace-cathy.metadata.plugins\net.xmind.verify.blist” 2>NUL“ 及 “Cacls “%APPDATA%\XMind\workspace-cathy.metadata.plugins\net.xmind.verify.blist” /E /C /D EVERYONE 2>NUL“ 两句命令.
+6.打开 XMind, 输入序列号 “XAka34A2rVRYJ4XBIU35UZMUEEF64CMMIYZCK2FZZUQNODEKUHGJLFMSLIQMQUCUBXRENLK6NZL37JXP4PZXQFILMQ2RG5R7G4QNDO3PSOEUBOCDRYSSXZGRARV6MGA33TN2AMUBHEL4FXMWYTTJDEINJXUAV4BAYKBDCZQWVF3LWYXSDCXY546U3NBGOI3ZPAP2SO3CSQFNB7VVIY123456789012345“激活.
